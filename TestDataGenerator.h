@@ -2,15 +2,18 @@
 #define TESTDATA_GENERATOR_H
 
 #include <string>
+#include <iostream>
 
-class TestDataGenerator {
+class TestDataGenerator{
   private:
     // What data members will you need?
     // Add any private helper functions you want
     const std::string ticker;
     double sigma;
     double mean;
-    
+    double price;
+    double volume;
+
   public:
     TestDataGenerator();
     TestDataGenerator(double mean, double sigma, std::string ticker) { };
@@ -19,7 +22,8 @@ class TestDataGenerator {
     // The client, i.e. a main function you wrote, may call the tick function to retrieve the next tick data
     // A random amount of time should elapse between each tick;
     const std::string tick();
-    TestDataGenerator& operator>> (ofstream& stream);
+    std::istream& operator>> (std::ifstream& is, TestDataGenerator& tdg);
+    friend std::ostream& operator<< (std::ofstream& os, TestDataGenerator& tdg);
 
     const std::string getTicker();
     double getSigma();
