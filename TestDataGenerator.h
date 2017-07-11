@@ -79,9 +79,10 @@ class TestDataGenerator {
 };
 
 int main(){
-    TestDataGenerator hello = TestDataGenerator(100.0, 1.2, 0.3, "GDX");
+    TestDataGenerator hello = TestDataGenerator(100.0, 1.8, 0.5, "GDX");
     hello.to_file(100000);
-    
+
+    return 0;
 }
 
 #endif

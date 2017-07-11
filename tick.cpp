@@ -13,7 +13,7 @@ const std::string TestDataGenerator::tick() {
     timeElapsed += interval;
 
     double second_sigma = sigma/sqrt(22*7*60*60);
-    double change = initial_price*((pow(returns,1/(22*7*60*60))-1)*interval + second_sigma*X.return_X()*sqrt(interval));
+    double change = initial_price*((pow(pow(returns,1/(22*7*60*60)),interval)-1)*interval + second_sigma*X.return_X()*sqrt(interval));
     end_price += change;
     
     return ticker + " " + std::to_string(end_price);
@@ -21,4 +21,5 @@ const std::string TestDataGenerator::tick() {
 
 std::ostream& operator<< (std::ostream& stream, const TestDataGenerator& TDG) {
     stream << TDG.ticker << ' ' << TDG.end_price << std::endl;
+    stream << TDG.timeElapsed << std::endl;
 }
