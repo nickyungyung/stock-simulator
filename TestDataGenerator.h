@@ -21,9 +21,9 @@ class TestDataGenerator {
     TestDataGenerator();
     TestDataGenerator(double i, double r, double s, std::string t) {
         initial_price = i;
-	returns = r;
-	sigma = s;
-	ticket = t;
+	    returns = r;
+	    sigma = s;
+    	ticket = t;
     }; //stochastic process
 
     // The client, i.e. a main function you wrote, may call the tick function to retrieve the next tick data
@@ -31,32 +31,30 @@ class TestDataGenerator {
     
     const std::string tick();
 
-    friend ostream& operator<< (ostream& stream, const TestDataGenerator& TDG){
-	stream << TDG.ticker << ' ' << TDG.end_price << std::endl;
-    }; 
+    friend ostream& operator<< (ostream& stream, const TestDataGenerator& TDG); 
     
     void to_file(int n, const TestDataGenerator& TDG){
-	time_t rawtime;
-	time(&rawtime);
+        time_t rawtime;
+        time(&rawtime);
 
-	std::string filename = ctime(&rawtime);
-	ofstream file(filename);
-	
-	if(!file.is_open()){std:: cout << "Unable to open the file." << std:: endl;}
-	else {
-	    for (int i = 0; i < n; i++){
-	        tick();
-		file << &this;
-	    }
-	}
+        std::string filename = ctime(&rawtime);
+        ofstream file(filename);
+        
+        if(!file.is_open()){std:: cout << "Unable to open the file." << std:: endl;}
+        else {
+            for (int i = 0; i < n; i++){
+                tick();
+            file << &this;
+            }
+        }
     }
 
     const std::string getTicker(){
-	return ticker;
+        return ticker;
     }
 
     double getCurrentPrice(){
-	return end_price;
+        return end_price;
     }
 
     double getCurrentVolume(){};
