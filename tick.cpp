@@ -1,3 +1,6 @@
+#include "TestDataGenerator.h"
+#include <string>
+
 const std::string TestDataGenerator::tick() {
     
     initial_price = end_price;
@@ -7,16 +10,15 @@ const std::string TestDataGenerator::tick() {
     srand(time(NULL));
     interval = rand() %10 +1;
     
-    timeElaspsed += interval;
+    timeElapsed += interval;
 
     double second_sigma = sigma/sqrt(22*7*60*60);
-    double change = initial_price*(returns*interval + second_sigma*X.return_X()*sqrt(interval));
+    double change = initial_price*((pow(returns,1/(22*7*60*60))-1)*interval + second_sigma*X.return_X()*sqrt(interval));
     end_price += change;
     
-    return ticker + " " + to_string(end_price);
+    return ticker + " " + std::to_string(end_price);
 }
 
-ostream& operator<< (ostream& stream, const TestDataGenerator& TDG) {
+std::ostream& operator<< (std::ostream& stream, const TestDataGenerator& TDG) {
     stream << TDG.ticker << ' ' << TDG.end_price << std::endl;
 }
-

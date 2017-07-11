@@ -2,6 +2,8 @@
 #define TESTDATA_GENERATOR_H
 
 #include <string>
+#include <fstream>
+#include "N_random.cpp"
 
 class TestDataGenerator {
   private:
@@ -11,19 +13,22 @@ class TestDataGenerator {
     double sigma; //per month
     double returns; //per month
     double initial_price;
-    double end_price = initial_price;
-    int timeElapsed = 0;
-    N_random X((returns-1)*initial_price, sigma/sqrt(22*7*60*60)); 
-    
+    double end_price;
+    int timeElapsed;
+    N_random X;
+
 // sigma = sd of per month percentage change of the security 
 
   public:
     TestDataGenerator();
-    TestDataGenerator(double i, double r, double s, std::string t) {
+    TestDataGenerator(double i, double r, double s, std::string t) 
+        : ticker(t),
+          X(pow(r,1/(22*7*60))-1, s/sqrt(22*7*60))
+    {
         initial_price = i;
-	    returns = r;
+	    end_price =i;
+        returns = r;
 	    sigma = s;
-    	ticket = t;
     }; //stochastic process
 
     // The client, i.e. a main function you wrote, may call the tick function to retrieve the next tick data
@@ -31,22 +36,27 @@ class TestDataGenerator {
     
     const std::string tick();
 
-    friend ostream& operator<< (ostream& stream, const TestDataGenerator& TDG); 
+    friend std::ostream& operator<< (std::ostream& stream, const TestDataGenerator& TDG); 
     
-    void to_file(int n, const TestDataGenerator& TDG){
+    void to_file(int n){
         time_t rawtime;
         time(&rawtime);
 
         std::string filename = ctime(&rawtime);
-        ofstream file(filename);
+        filename = filename.substr(0, filename.size() - 1);
+        std::ofstream file(filename);
         
-        if(!file.is_open()){std:: cout << "Unable to open the file." << std:: endl;}
+        if (!file.is_open()) {
+            std:: cout << "Unable to open the file." << std:: endl;
+        }
         else {
             for (int i = 0; i < n; i++){
                 tick();
-            file << &this;
+                file << *this;
             }
         }
+
+        file.close();
     }
 
     const std::string getTicker(){
@@ -62,14 +72,16 @@ class TestDataGenerator {
     double getSigma(){
         return sigma;
     }
-    double gettimeElaspsed(){
+    double gettimeElapsed(){
     	return timeElapsed;
     }
 
 };
 
 int main(){
-    TestDataGenerator(100, 0.03, "GDX");
+    TestDataGenerator hello = TestDataGenerator(100.0, 1.2, 0.3, "GDX");
+    hello.to_file(100000);
+    
 }
 
 #endif

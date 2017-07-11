@@ -1,4 +1,3 @@
-#include <TestDataGenerator.h>
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -28,7 +27,7 @@ class N_random {
 		}
 		
 		//reroll possess a counter that varies according to i and time(NULL); i is varied by function vary_i when the function is called, time(null) varies when the function is compiled at different system time
-		reroll(){
+		void reroll(){
 			vary_i();
 			counter +=(i + time(NULL));
 			counter = counter%10000; //%10000 as to limit counter size, randomness perserved
@@ -40,11 +39,11 @@ class N_random {
 		}
 		
 		//get_X prints out the current X value
-		get_X(){
+		void get_X(){
 			std:: cout << X << std::endl;
 		}
 		//return_X returns a double copy of the X value of the object
 		double return_X(){
 			return X;
 		}
-}
+};
