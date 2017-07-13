@@ -23,8 +23,7 @@ class TestDataGenerator {
     TestDataGenerator();
     TestDataGenerator(double i, double r, double s, std::string t) 
         : ticker(t),
-          X(log((1+ log(r)/(22*7*60))/sqrt(1+1/(pow((1+ log(r)/(22*7*60)),2)/pow(s/sqrt(22*7*60),2)))), sqrt(log(1+1/(pow((1+ log(r)/(22*7*60)),2)/pow(s/sqrt(22*7*60),2)))/sqrt(22*7*60)))
-
+          X(0,1)
     {
         initial_price = i;
 	    end_price =i;
@@ -40,6 +39,7 @@ class TestDataGenerator {
     friend std::ostream& operator<< (std::ostream& stream, const TestDataGenerator& TDG); 
     
     void to_file(int n){
+        double start = initial_price;
         time_t rawtime;
         time(&rawtime);
 
@@ -56,7 +56,8 @@ class TestDataGenerator {
                 file << *this;
             }
         }
-
+        
+        file << "The expected return of the generation is " << start * pow(returns,(timeElapsed/(22*7*60))) << "." << std::endl;
         file.close();
     }
 
@@ -81,7 +82,7 @@ class TestDataGenerator {
 
 int main(){
     TestDataGenerator hello = TestDataGenerator(100.0, 1.8, 0.5, "GDX");
-    hello.to_file(100000);
+    hello.to_file(9240);
 
     return 0;
 }
