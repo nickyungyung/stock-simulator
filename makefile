@@ -4,7 +4,7 @@ GPPFLAGS = -std=c++11
 %: %.cpp
 	$(CC) $(GPPFLAGS) -o $@ $<
 
-TESTOBJ = TestDataGenerator.h
+TARGET = tick
 
-tick: $(TESTOBJ)
-	$(CC) $(GPPFLAGS) -o $@ $<
+$(TARGET):
+	$(CC) $(GPPFLAGS) -o $@ ./*.cpp
