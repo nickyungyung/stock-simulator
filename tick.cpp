@@ -12,8 +12,9 @@ const std::string TestDataGenerator::tick() {
     
     timeElapsed += interval;
 
-    double second_sigma = sqrt(log(1+1/(pow(pow(r,1/(22*7*60)),2)/pow(s/sqrt(22*7*60),2))))/sqrt(22*7*60);
-    double change = initial_price*((log(pow(r,1/(22*7*60))/sqrt(1+pow(pow(r,1/(22*7*60)),2)/pow(s/sqrt(22*7*60),2))))*interval + second_sigma*X.return_X()*sqrt(interval));
+    double second_sigma = sqrt(log(1+1/(pow((1+ log(returns)/(22*7*60)),2)/pow(sigma/sqrt(22*7*60),2))))/sqrt(22*7*60);
+    double change = initial_price*(log((1+ log(returns)/(22*7*60))/sqrt(1+1/(pow(1+ log(returns)/(22*7*60),2)/pow(sigma/sqrt(22*7*60),2)))))*interval + second_sigma*X.return_X()*sqrt(interval);
+    
     end_price += change;
     
     return ticker + " " + std::to_string(end_price);

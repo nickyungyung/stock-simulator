@@ -23,7 +23,8 @@ class TestDataGenerator {
     TestDataGenerator();
     TestDataGenerator(double i, double r, double s, std::string t) 
         : ticker(t),
-          X(log(pow(r,1/(22*7*60))/sqrt(1+1/(pow(pow(r,1/(22*7*60)),2)/pow(s/sqrt(22*7*60),2)))), sqrt(log(1+1/(pow(pow(r,1/(22*7*60)),2)/pow(s/sqrt(22*7*60),2))))/sqrt(22*7*60))
+          X(log((1+ log(r)/(22*7*60))/sqrt(1+1/(pow((1+ log(r)/(22*7*60)),2)/pow(s/sqrt(22*7*60),2)))), sqrt(log(1+1/(pow((1+ log(r)/(22*7*60)),2)/pow(s/sqrt(22*7*60),2)))/sqrt(22*7*60)))
+
     {
         initial_price = i;
 	    end_price =i;
