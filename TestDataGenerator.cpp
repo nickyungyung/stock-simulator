@@ -29,7 +29,7 @@ const std::string TestDataGenerator::tick()
     time_elapsed += interval;
 
     double second_sigma = sigma/sqrt(22*7*60); //including the adjustment for interval
-    double x = log(returns/sqrt(1+sigma*sigma/returns*returns))/(22*7*60)*interval + second_sigma* X.getX()* sqrt(interval);
+    double x = log(returns)/(22*7*60)*interval + second_sigma* X.getX()* sqrt(interval);
     double change = initial_price*(x);
     end_price += change;
 
