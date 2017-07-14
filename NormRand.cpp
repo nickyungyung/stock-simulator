@@ -24,7 +24,7 @@ void NormRand::reroll()
 {
 	++i;
 	counter += (i + time(NULL)) + randomSeed;
-	counter = counter%10000; //%10000 as to limit counter size, randomness perserved
+	counter = counter%rand(); //%10000 as to limit counter size, randomness perserved
 
 	srand(counter);
 	std:: default_random_engine generator (rand());
