@@ -9,29 +9,31 @@ TestDataGenerator::TestDataGenerator(double i, double r,  double s, std::string 
     returns(r),
     initial_price(i),
     end_price(i),
-    time_elapsed{0},
-X(0, 1, randomSeed)
-{randomSeed += rand(); randomSeed = randomSeed%10000; }
+    time_elapsed(0),
+    norm_rand(0, 1, random_seed)
+{
+    random_seed += rand();
+    random_seed %= 10000;
+}
 
-int TestDataGenerator::randomSeed {0};
+int TestDataGenerator::random_seed {0};
 
 const std::string TestDataGenerator::tick()
 {
-    initial_price = end_price;
-    X.reroll();
+    norm_rand.reroll();
 
     int interval; // interval is a random amount of seconds between 1-10
-    srand(time(NULL));
-    interval = rand() % 10 +1;
+//    srand(time(NULL));
+//    interval = rand() % 10 +1;
 
     interval = 1; // interval set to be 1 for now
-
     time_elapsed += interval;
 
-    double second_sigma = sigma/sqrt(22*7*60); //including the adjustment for interval
-    double x = log(returns/sqrt(1+sigma*sigma/returns*returns))/(22*7*60)*interval + second_sigma* X.getX()* sqrt(interval);
-    double change = initial_price*(x);
-    end_price += change;
+    double tau = 1 / sqrt(22 * 7 * 60);
+    double sigma_sqr = sigma * sigma; // adjustment from month to second unit
+
+    double x = log(returns) * pow(tau, 2) * interval + sigma_sqr * norm_rand.getX() * interval * tau / 2;
+    end_price *= (1 + x);
 
     return ticker + " " + std::to_string(end_price);
 }

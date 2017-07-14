@@ -6,5 +6,5 @@ GPPFLAGS = -std=c++11
 
 TARGET = tick
 
-$(TARGET):
+$(TARGET): *.cpp
 	$(CC) $(GPPFLAGS) -o $@ ./*.cpp

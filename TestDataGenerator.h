@@ -13,8 +13,8 @@ private:
     double initial_price;
     double end_price;
     int time_elapsed;
-    NormRand X;
-    static int randomSeed;
+    static int random_seed;
+    NormRand norm_rand;
 
 public:
     TestDataGenerator();
