@@ -9,8 +9,11 @@ TestDataGenerator::TestDataGenerator(double i, double r,  double s, std::string 
     returns(r),
     initial_price(i),
     end_price(i),
-    X(0, 1)
-{ }
+    time_elapsed{0},
+X(0, 1, randomSeed)
+{randomSeed += rand(); randomSeed = randomSeed%10000; }
+
+int TestDataGenerator::randomSeed {0};
 
 const std::string TestDataGenerator::tick()
 {
@@ -25,9 +28,9 @@ const std::string TestDataGenerator::tick()
 
     time_elapsed += interval;
 
-    double second_sigma = sigma/sqrt(22*7*60);
-    double change = initial_price*(log((1+ log(returns)/(22*7*60))/sqrt(1+1/(pow(1+ log(returns)/(22*7*60),2)/pow(sigma/sqrt(22*7*60),2))))*interval + second_sigma*X.getX()*sqrt(interval));
-
+    double second_sigma = sigma/sqrt(22*7*60); //including the adjustment for interval
+    double x = log(returns/sqrt(1+sigma*sigma/returns*returns))/(22*7*60)*interval + second_sigma* X.getX()* sqrt(interval);
+    double change = initial_price*(x);
     end_price += change;
 
     return ticker + " " + std::to_string(end_price);
@@ -53,7 +56,6 @@ void TestDataGenerator::toFile(int n)
         }
     }
 
-    file << "The expected return of the generation is " << start * pow(returns,(time_elapsed/(22*7*60))) << "." << std::endl;
     file.close();
 }
 

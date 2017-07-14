@@ -9,10 +9,11 @@ private:
     double X;           // a random sample from then distribution
     int counter = 0;    // holds reroll parameters
     int i = 0;          // holds reroll parameters
+    int randomSeed;
 
 public:
     // Constructor initialize mean, sigma and generates and X
-    NormRand(double m, double s);
+    NormRand(double m, double s, int r);
 
     void reroll();
     void printX();

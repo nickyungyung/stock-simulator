@@ -7,12 +7,13 @@
 
 // Constructor that takes in argument to initialize double mean and
 // double sigma, generates X
-NormRand::NormRand(double m, double s)
+NormRand::NormRand(double m, double s, int r)
 {
     mean = m;
     sigma = s;
+    randomSeed = r;
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() + randomSeed;
     std::default_random_engine generator(seed);
     std::normal_distribution<double> distribution(mean, sigma);
     X = distribution(generator);
@@ -22,7 +23,7 @@ NormRand::NormRand(double m, double s)
 void NormRand::reroll()
 {
 	++i;
-	counter += (i + time(NULL));
+	counter += (i + time(NULL)) + randomSeed;
 	counter = counter%10000; //%10000 as to limit counter size, randomness perserved
 
 	srand(counter);

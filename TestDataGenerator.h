@@ -14,6 +14,7 @@ private:
     double end_price;
     int time_elapsed;
     NormRand X;
+    static int randomSeed;
 
 public:
     TestDataGenerator();
@@ -32,5 +33,7 @@ public:
     double getSigma() const;
     int getTimeElapsed() const;
 };
+
+
 
 #endif
