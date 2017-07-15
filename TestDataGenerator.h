@@ -12,6 +12,7 @@ private:
     const double returns; // per month
     double initial_price;
     double end_price;
+    double last_change;
     int time_elapsed;
     static int random_seed;
     NormRand norm_rand;
@@ -23,14 +24,15 @@ public:
     // The client, i.e. a main function you wrote, may call the tick function
     // to retrieve the next tick data. A random amount of time should elapse
     // between each tick;
-    const std::string tick();
+    double tick();
     friend std::ostream& operator<<(std::ostream& stream, const TestDataGenerator& tdg);
 
     void toFile(int n);
     std::string getTicker() const;
+    double getSigma() const;
     double getCurrentPrice() const;
     double getCurrentVolume() const;
-    double getSigma() const;
+    double getLastChange() const;
     int getTimeElapsed() const;
 };
 

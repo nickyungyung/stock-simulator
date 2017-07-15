@@ -18,7 +18,7 @@ TestDataGenerator::TestDataGenerator(double i, double r,  double s, std::string 
 
 int TestDataGenerator::random_seed {0};
 
-const std::string TestDataGenerator::tick()
+double TestDataGenerator::tick()
 {
     norm_rand.reroll();
 
@@ -29,13 +29,14 @@ const std::string TestDataGenerator::tick()
     interval = 1; // interval set to be 1 for now
     time_elapsed += interval;
 
-    double tau = 1 / sqrt(22 * 7 * 60);
-    double sigma_sqr = sigma * sigma; // adjustment from month to second unit
+    double tau = (double) 1 / (22 * 7 * 60);
+    double sigma_sqr = sigma * sigma;
 
-    double x = log(returns) * pow(tau, 2) * interval + sigma_sqr * norm_rand.getX() * interval * tau / 2;
-    end_price *= (1 + x);
+    double x = log(returns)*tau*interval + sigma_sqr*norm_rand.getX()*tau*interval;
+    last_change = x * end_price;
+    end_price += last_change;
 
-    return ticker + " " + std::to_string(end_price);
+    return end_price;
 }
 
 void TestDataGenerator::toFile(int n)
@@ -66,6 +67,11 @@ std::string TestDataGenerator::getTicker() const
     return ticker;
 }
 
+double TestDataGenerator::getSigma() const
+{
+    return sigma;
+}
+
 double TestDataGenerator::getCurrentPrice() const
 {
     return end_price;
@@ -74,6 +80,11 @@ double TestDataGenerator::getCurrentPrice() const
 double TestDataGenerator::getCurrentVolume() const
 {
     return sigma;
+}
+
+double TestDataGenerator::getLastChange() const
+{
+    return last_change;
 }
 
 int TestDataGenerator::getTimeElapsed() const
