@@ -30,9 +30,8 @@ double TestDataGenerator::tick()
     time_elapsed += interval;
 
     double tau = (double) 1 / (22 * 7 * 60);
-    double sigma_sqr = sigma * sigma;
 
-    double x = log(returns)*tau*interval + sigma_sqr*norm_rand.getX()*tau*interval;
+    double x = log(returns)*tau*interval + sigma*norm_rand.getX()*tau*interval;
     last_change = x * end_price;
     end_price += last_change;
 
