@@ -36,7 +36,7 @@ void NormRand::reroll()
 
 // printX prints out the current X value
 void NormRand::printX(){
-	std:: cout << X << std::endl;
+	std::cout << X << std::endl;
 }
 
 //getX returns a double copy of the X value of the object

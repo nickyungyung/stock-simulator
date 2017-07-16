@@ -8,7 +8,7 @@ TestDataGenerator::TestDataGenerator(double i, double r,  double s, std::string 
     sigma(s),
     returns(r),
     initial_price(i),
-    end_price(i),
+    total_change(1.0),
     time_elapsed(0),
     norm_rand(0, 1, random_seed)
 {
@@ -18,7 +18,7 @@ TestDataGenerator::TestDataGenerator(double i, double r,  double s, std::string 
 
 int TestDataGenerator::random_seed {0};
 
-double TestDataGenerator::tick()
+void TestDataGenerator::tick()
 {
     norm_rand.reroll();
 
@@ -31,11 +31,8 @@ double TestDataGenerator::tick()
 
     double tau = (double) 1 / (22 * 7 * 60);
 
-    double x = log(returns)*tau*interval + sigma*norm_rand.getX()*tau*interval;
-    last_change = x * end_price;
-    end_price += last_change;
-
-    return end_price;
+    last_change = log(returns)*tau*interval + sigma*norm_rand.getX()*tau*interval;
+    total_change *= exp(last_change);
 }
 
 void TestDataGenerator::toFile(int n)
@@ -73,12 +70,17 @@ double TestDataGenerator::getSigma() const
 
 double TestDataGenerator::getCurrentPrice() const
 {
-    return end_price;
+    return initial_price*total_change;
 }
 
 double TestDataGenerator::getCurrentVolume() const
 {
-    return sigma;
+    return -1.0;
+}
+
+double TestDataGenerator::getTotalChange() const
+{
+    return total_change;
 }
 
 double TestDataGenerator::getLastChange() const
