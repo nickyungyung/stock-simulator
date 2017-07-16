@@ -1,22 +1,26 @@
 #include "TestDataGenerator.h"
 #include <iostream>
+#include <cmath>
 
 int main()
 {
-    TestDataGenerator tdg = TestDataGenerator(100.0,  1.8, 0.5, "GDX");
-    tdg.toFile(9240);
-
     double mu = 0;
     int a;
-    for (int i = 0; i<10000;i++){
-        TestDataGenerator hello = TestDataGenerator(100.0, 1.8, 0.5, "GDX");
+    int runs = 1000;
+
+    for (int i = 0; i < runs; i++){
+        TestDataGenerator tdg = TestDataGenerator(100.0, 1.8, 0.5, "GDX");
         for (int i = 0; i < 9240; i++){
-            hello.tick();
+            tdg.tick();
         }
-        mu += hello.getCurrentPrice();
-        std::cout << hello.getCurrentPrice() << std::endl;
+        // std::cout << tdg.getCurrentPrice();
+        // std::cout << ',' << tdg.getTotalChange();
+        // std::cout << std::endl;
+        mu += tdg.getCurrentPrice();
     }
-    std::cout <<std::endl << mu/10000 << std::endl;
-    
+
+    std::cout << "Mean monthly return of " << runs << ": " << mu/runs;
+    std::cout << std::endl;
+
     return 0;
 }
