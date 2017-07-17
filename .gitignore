@@ -3,5 +3,6 @@
 *.out
 *2017
 *.log
+*.csv
 
 tick
