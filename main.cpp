@@ -13,14 +13,13 @@ int main()
         for (int i = 0; i < 9240; i++){
             tdg.tick();
         }
-        // std::cout << tdg.getCurrentPrice();
-        // std::cout << ',' << tdg.getTotalChange();
-        // std::cout << std::endl;
-        mu += tdg.getCurrentPrice();
+        std::cout << tdg.getCurrentPrice();
+        std::cout << std::endl;
+        // mu += tdg.getCurrentPrice();
     }
 
-    std::cout << "Mean monthly return of " << runs << ": " << mu/runs;
-    std::cout << std::endl;
+    // std::cout << "Mean monthly return of " << runs << " sims: " << mu/runs;
+    // std::cout << std::endl;
 
     return 0;
 }

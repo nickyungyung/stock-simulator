@@ -31,7 +31,8 @@ void TestDataGenerator::tick()
 
     double tau = (double) 1 / (22 * 7 * 60);
 
-    last_change = log(returns)*tau*interval + sigma*norm_rand.getX()*tau*interval;
+    last_change = (log(returns) - sigma*sigma/2)*tau*interval; // drift term
+    last_change += sigma*norm_rand.getX()*sqrt(tau*interval); // volatility term
     total_change *= exp(last_change);
 }
 
@@ -85,7 +86,7 @@ double TestDataGenerator::getTotalChange() const
 
 double TestDataGenerator::getLastChange() const
 {
-    return last_change;
+    return exp(last_change);
 }
 
 int TestDataGenerator::getTimeElapsed() const
