@@ -1,10 +1,11 @@
 CC = g++
 GPPFLAGS = -std=c++11
 
-%: %.cpp
-	$(CC) $(GPPFLAGS) -o $@ $<
+tick: *.cpp
+	$(CC) $(GPPFLAGS) -o $@ ./*.cpp
 
-TARGET = tick
+month: *.cpp
+	$(CC) $(GPPFLAGS) -o $@ ./*.cpp
 
-$(TARGET): *.cpp
+mean: *.cpp
 	$(CC) $(GPPFLAGS) -o $@ ./*.cpp
